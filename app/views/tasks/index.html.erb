@@ -1,0 +1,42 @@
+<div class="container">
+  <h1 class="title">TODOS</h1>
+  <div class="tabs">
+    <button class="tab" onclick="showIncomplete()">Incomplete</button>
+    <button class="tab" onclick="showComplete()">Complete</button>
+  </div>
+
+  <div class="form-group">
+    <label for="task_name">Name</label>
+    <%= form_with model: @task, local: true do |f| %>
+      <%= f.text_field :name, placeholder: 'Enter task name', class: 'task-input' %>
+      <%= f.submit 'Create Todo', class: 'btn-create' %>
+    <% end %>
+  </div>
+
+  <div id="incomplete-tasks">
+    <h2>Incomplete Tasks</h2>
+    <ul>
+      <% @tasks.each do |task| %>
+        <% if task.status == 'incomplete' %>
+          <li>
+            <%= task.name %>
+            <%= link_to '✅', complete_task_path(task), method: :get, class: 'btn-complete' %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+
+  <div id="complete-tasks" style="display:none;">
+    <h2>Complete Tasks</h2>
+    <ul>
+      <% @tasks.each do |task| %>
+        <% if task.status == 'complete' %>
+          <li>
+            <%= task.name %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+</div>
